@@ -47,11 +47,11 @@ sed -i "4s/.*/nsteps                  = $(echo "scale=0; $save_each*1000/$dt " |
 while [ $start_md -le $n_iterations ]; do
 	prev_i=$((start_md-1))
 	if (($start_md == 1 )); then 
-	gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_$start_md.tpr
-	gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm md_$start_md
+		gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_$start_md.tpr
+		gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm md_$start_md
 	else
-	gmx convert-tpr -s md_$prev_i.tpr -extend $(echo "scale=0; $save_each*1000 " | bc) -o md_$start_md.tpr
-	gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm md_$start_md -cpi md_$prev_i.cpt -noappend
+		gmx convert-tpr -s md_$prev_i.tpr -extend $(echo "scale=0; $save_each*1000 " | bc) -o md_$start_md.tpr
+		gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm md_$start_md -cpi md_$prev_i.cpt -noappend
 	fi
 	start_md=$((start_md+1));
 done
