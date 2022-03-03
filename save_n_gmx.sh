@@ -1,3 +1,9 @@
+###################################
+#  By: Gustavo E. Olivos-Ramirez  #
+#      gustavo.olivos@upch.pe     #
+#      Lima-Peru                  #
+###################################
+
 #Minimization
 shopt -s nullglob
 em_log=(./*em.log)
