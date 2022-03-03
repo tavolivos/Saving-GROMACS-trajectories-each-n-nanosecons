@@ -2,30 +2,30 @@
 shopt -s nullglob
 em_log=(./*em.log)
 if ((${#em_log[@]})); then
-echo "Minimization finished"
+	echo "Minimization finished"
 else
-gmx grompp -f em.mdp -c system.gro -r system.gro -p topol.top -n index.ndx -o em.tpr
-gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm em
+	gmx grompp -f em.mdp -c system.gro -r system.gro -p topol.top -n index.ndx -o em.tpr
+	gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm em
 fi
 
 #Temperature
 shopt -s nullglob
 nvt_log=(./*nvt.log)
 if ((${#nvt_log[@]})); then
-echo "NVT finished"
+	echo "NVT finished"
 else
-gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
-gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm nvt
+	gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
+	gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm nvt
 fi
 
 #Pression
 shopt -s nullglob
 npt_log=(./*npt.log)
 if ((${#npt_log[@]})); then
-echo "NPT finished"
+	echo "NPT finished"
 else
-gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
-gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm npt
+	gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
+	gmx mdrun -ntomp 20 -ntmpi 1 -v -nb gpu -deffnm npt
 fi
 
 #Production
